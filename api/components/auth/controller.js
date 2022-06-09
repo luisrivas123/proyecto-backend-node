@@ -5,19 +5,18 @@ const TABLA = 'auth';
 
 module.exports = function (injectedStore) {
     let store = injectedStore;
-    // comprueba las base de datos sino la define
     if (!store) {
         store = require('../../../store/dummy');
     }
 
     async function login(username, password) {
         const data = await store.query(TABLA, { username: username });
-        // encadenar promesas
+        
         return bcrypt.compare(password, data.password)
             .then(sonIguales => {
                 if (sonIguales === true) {
                     // Generar token;
-                    return auth.sign(data)
+                    return auth.sign({ ...data })
                 } else {
                     throw new Error('Informacion invalida');
                 }
@@ -41,7 +40,7 @@ module.exports = function (injectedStore) {
     }
 
     return {
+        login,
         upsert,
-        login
     };
 };
