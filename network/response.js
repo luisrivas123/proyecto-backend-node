@@ -9,7 +9,7 @@ exports.success = function (req, res, message, status){
     })
 }
 
-exports.erro = function (req, res, message, status){
+exports.error = function (req, res, message, status){
     let statusCode = status || 500
     let statusMessaje = message || 'Interanl server error'
 
