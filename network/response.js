@@ -14,7 +14,7 @@ exports.error = function (req, res, message, status){
     let statusMessaje = message || 'Interanl server error'
 
     res.status(statusCode).send({
-        error: false,
+        error: true,
         status: status,
         body: statusMessaje,
     })
