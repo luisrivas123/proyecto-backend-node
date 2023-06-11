@@ -71,16 +71,6 @@ function update(table, data) {
     })
 }
 
-function upsert(table, data) {
-    // return insert(table, data);
-    // console.log(data.id);
-    if (data && data.id) {
-        return update(table, data);
-    } else {
-        return insert(table, data);
-    }
-}
-
 function query(table, query) {
     return new Promise((resolve, reject) => {
         connection.query(`SELECT * FROM ${table} WHERE ?`, query, (err, res) => {
@@ -93,6 +83,7 @@ function query(table, query) {
 module.exports = {
     list,
     get,
-    upsert,
+    insert,
+    update,
     query
 };

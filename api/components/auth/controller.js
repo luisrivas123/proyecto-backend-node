@@ -9,28 +9,14 @@ module.exports = function (injectedStore) {
         store = require('../../../store/mysql')
     }
 
-    // async function login(username, password) {
-    //     const data = await store.query(TABLA, { username: username })
+    const login = async (username, password) => {
+        const data = await store.query(TABLA,{ username:username })
 
-    //     return bcrypt.compare(password, data.password)
-    //         .then(sonIguales => {
-    //             if (sonIguales  === true) {
-    //                 // Generar token;
-    //                 return auth.sign(data)
-    //             } else {
-    //                 throw new Error('Informacion invalida')
-    //             }
-    //         })
+        return bcrypt.compare(password, data.password)
+            .then(sonIguales => {
+                if(sonIguales) {
+                    // return auth.sign(data)
 
-        
-    // }
-
-    const login = async (username,password) => {
-        const data = await store.query(TABLA,{username:username})
-        return bcrypt.compare(password,data.password)
-            .then((sonIguales)=>{
-                
-                if(sonIguales){
                     const plainObject = {...data}
                     return auth.sign(plainObject)
                 
@@ -38,11 +24,10 @@ module.exports = function (injectedStore) {
 
                     throw new Error('Informacion invalida')
                 }
-
             })
     }
 
-    async function upsert(data) {
+    async function create(data) {
         const authData = {
             id: data.id,
         }
@@ -55,11 +40,11 @@ module.exports = function (injectedStore) {
             authData.password = await bcrypt.hash(data.password, 5)
         }
 
-        return store.upsert(TABLA, authData)
+        return store.insert(TABLA, authData)
     }
 
     return {
         login,
-        upsert,
+        create,
     };
 };
