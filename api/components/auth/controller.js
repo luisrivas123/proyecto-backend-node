@@ -6,23 +6,40 @@ const TABLA = 'auth';
 module.exports = function (injectedStore) {
     let store = injectedStore;
     if (!store) {
-        store = require('../../../store/dummy')
+        store = require('../../../store/mysql')
     }
 
-    async function login(username, password) {
-        const data = await store.query(TABLA, { username: username })
+    // async function login(username, password) {
+    //     const data = await store.query(TABLA, { username: username })
 
-        return bcrypt.compare(password, data.password)
-            .then(sonIguales => {
-                if (sonIguales  === true) {
-                    // Generar token;
-                    return auth.sign(data)
-                } else {
-                    throw new Error('Informacion invalida')
-                }
-            })
+    //     return bcrypt.compare(password, data.password)
+    //         .then(sonIguales => {
+    //             if (sonIguales  === true) {
+    //                 // Generar token;
+    //                 return auth.sign(data)
+    //             } else {
+    //                 throw new Error('Informacion invalida')
+    //             }
+    //         })
 
         
+    // }
+
+    const login = async (username,password) => {
+        const data = await store.query(TABLA,{username:username})
+        return bcrypt.compare(password,data.password)
+            .then((sonIguales)=>{
+                
+                if(sonIguales){
+                    const plainObject = {...data}
+                    return auth.sign(plainObject)
+                
+                } else {
+
+                    throw new Error('Informacion invalida')
+                }
+
+            })
     }
 
     async function upsert(data) {
