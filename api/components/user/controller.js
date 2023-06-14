@@ -55,6 +55,10 @@ module.exports = function (injectedStore) {
         return store.update(TABLA, user);
     }
 
+    function deleteuser(id) {
+        return store.deleteuser(TABLA, id)
+    }
+
     function follow(from, to) {
         return store.insert(TABLA + '_follow', {
             user_from: from,
@@ -77,5 +81,6 @@ module.exports = function (injectedStore) {
         update,
         follow,
         following,
+        deleteuser,
     }
 }

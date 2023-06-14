@@ -36,7 +36,7 @@ function handleCon() {
 handleCon();
 
 function list(table, id) {
-    return new Promise( (resolve, reject) => {
+    return new Promise((resolve, reject) => {
         connection.query(`SELECT * FROM ${table}`, (err, data) => {
             if (err) return reject(err);
             resolve(data);
@@ -46,7 +46,7 @@ function list(table, id) {
 
 function get(table, id) {
     return new Promise((resolve, reject) => {
-        connection.query(`SELECT * FROM ${table} WHERE id=${id}`, (err, data) => {
+        connection.query(`SELECT * FROM ${table} WHERE id='${id}'`, (err, data) => {
             if (err) return reject(err);
             resolve(data);
         })
@@ -67,6 +67,15 @@ function update(table, data) {
         connection.query(`UPDATE ${table} SET ? WHERE id=?`, [data, data.id], (err, result) => {
             if (err) return reject(err);
             resolve(result);
+        })
+    })
+}
+
+function deleteuser(table, id) {
+    return new Promise((resolve, reject) => {
+        connection.query(`DELETE FROM ${table} WHERE id='${id}'`, (err, data) => {
+            if (err) return reject(err);
+            resolve(data);
         })
     })
 }
@@ -96,5 +105,6 @@ module.exports = {
     get,
     insert,
     update,
-    query
+    query,
+    deleteuser
 };

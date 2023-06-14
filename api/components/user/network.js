@@ -13,6 +13,7 @@ router.get('/', list)
 router.get('/:id', get)
 router.post('/', create)
 router.put('/', secure('update'), update)
+router.delete('/:id', deleteuser)
 router.post('/follow/:id', secure('follow'), follow)
 router.get('/:id/following', following)
 
@@ -47,6 +48,15 @@ function update(req, res, next) {
     Controller.update(req.body)
         .then((user) => {
             response.success(req, res, user, 201)
+        })
+        .catch(next)
+    
+}
+
+function deleteuser(req, res, next) {
+    Controller.deleteuser(req.params.id)
+        .then((user) => {
+            response.success(req, res, user, 200)
         })
         .catch(next)
     
