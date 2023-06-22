@@ -4,6 +4,7 @@ const swaggerUi = require('swagger-ui-express')
 const config = require('../config.js')
 const user = require('./components/user/network')
 const auth = require('./components/auth/network')
+const course = require('./components/course/network')
 const errors = require('../network/errors')
 
 const app = express()
@@ -18,6 +19,7 @@ const port = config.api.port
 app.get('/', (req, res) => res.send('Hello World!'))
 app.use('/api/user', user)
 app.use('/api/auth', auth)
+app.use('/api/course', course)
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc))
 
 app.use(errors)
