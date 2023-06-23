@@ -14,8 +14,8 @@ router.get('/:id', get)
 router.post('/', create)
 router.put('/', secure('update'), update)
 router.delete('/:id', deleteuser)
-router.post('/follow/:id', secure('follow'), follow)
-router.get('/:id/following', following)
+router.post('/course-add/:id', secure('courseAdd'), courseAdd)
+router.get('/:id/course-list', courseList)
 
 function list(req, res, next) {
     Controller.list()
@@ -62,16 +62,16 @@ function deleteuser(req, res, next) {
     
 }
 
-function follow(req, res, next) {
-    Controller.follow(req.user.id, req.params.id)
+function courseAdd(req, res, next) {
+    Controller.courseAdd(req.user.id, req.params.id)
         .then(data => {
             response.success(req, res, data, 201);
         })
         .catch(next);
 }
 
-function following(req, res, next) {
-	return Controller.following(req.params.id)
+function courseList(req, res, next) {
+	return Controller.courseList(req.params.id)
 		.then( (data) => {
 			return response.success(req, res, data, 200);
 		})

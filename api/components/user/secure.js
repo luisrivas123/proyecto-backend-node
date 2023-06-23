@@ -10,7 +10,7 @@ module.exports = function checkAuth(action) {
                 next()
                 break;
 
-            case 'follow':
+            case 'courseAdd':
                 auth.check.logged(req);
                 next();
                 break;

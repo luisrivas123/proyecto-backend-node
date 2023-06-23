@@ -59,19 +59,19 @@ module.exports = function (injectedStore) {
         return store.deleteuser(TABLA, id)
     }
 
-    function follow(from, to) {
-        return store.insert(TABLA + '_follow', {
-            user_from: from,
-            user_to: to,
+    function courseAdd(from, to) {
+        return store.insert(TABLA + '_course', {
+            user_id: from,
+            course_id: to,
         });
     }
 
-    async function following(user) {
+    async function courseList(user) {
         const join = {}
-        join[TABLA] = 'user_to'; // { user: 'user_to' }
-        const query = { user_from: user }
+        join['course'] = 'course_id'; // { user: 'user_to' }
+        const query = { user_id: user }
 		
-		return await store.query(TABLA + '_follow', query, join)
+		return await store.query(TABLA + '_course', query, join)
 	}
 
     return {
@@ -79,8 +79,8 @@ module.exports = function (injectedStore) {
         get,
         create,
         update,
-        follow,
-        following,
+        courseAdd,
+        courseList,
         deleteuser,
     }
 }
