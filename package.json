@@ -8,6 +8,7 @@
     "dev": "nodemon api/index.js",
     "dev:mysql": "nodemon mysql/index.js",
     "dev:post": "nodemon post/index.js",
+    "dev:cache": "nodemon cache/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -18,6 +19,7 @@
     "jsonwebtoken": "9.0.0",
     "mysql2": "^3.11.4",
     "nanoid": "2.1.7",
+    "redis": "^4.7.0",
     "request": "^2.88.2",
     "swagger-ui-express": "4.6.3"
   },
